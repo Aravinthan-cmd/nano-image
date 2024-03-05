@@ -1,23 +1,25 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "../imageTemp/imagetemp.scss";
-import red from '../../assets/images/alert-red.png'
-import green from '../../assets/images/alert-green.png'
-import Temp from "../../assets/images/frame_800.png";
+import red from '../../assets/images/alert-red.png';
+import green from '../../assets/images/alert-green.png';
 
 const ImageTemp = () => {
-  const [data, setData] = useState(null);
+  const [data,setData] = useState(null);
   const [data2, setData2] = useState(null);
-  const [imageSrc, setimageSrc] = useState('xyma.png');
-  const [imageSrc2, setimageSrc2] = useState('xyma.png');
-  const [temperature, setTemperature] = useState();
-  const [alert, setAlert] = useState(false);
+  const [baseCode, setBaseCode] = useState([]);
+  const [baseCode2, setBaseCode2] = useState([]);
+  const [image, setImage] = useState();
+  const [image2, setImage2] = useState();
+  const [temperature, setTemperature] = useState(0);
+  const [alert, setAlert] = useState(true);
 
+  //fetch
   useEffect(() => {
     const fetchData = async () => {
       var url;
       try {
-        url = "http://3.111.136.104:5001/sensor/getImage";
+        url = "http://localhost:4000/sensor/getImage";
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setData(datafetchVal);
@@ -25,10 +27,10 @@ const ImageTemp = () => {
         console.log("error", error);
       }
     };
-    const fetchDataimage2 = async () => {
+    const fetchData2 = async () => {
       var url;
       try {
-        url = "http://3.111.136.104:5001/sensor/getImage2";
+        url = "http://localhost:4000/sensor/getImage2";
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setData2(datafetchVal);
@@ -38,44 +40,54 @@ const ImageTemp = () => {
     };
     const interval = setInterval(() => {
       fetchData();
-      fetchDataimage2();
+      fetchData2();
     }, 1000);
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  },[]);
 
+  //image
   useEffect(() => {
-    if (data !== null && data.length > 0 && data[0].image) {
-      const binaryData = new Uint8Array(data[0].image.data.data);
-      const stringValue = new TextDecoder("utf-8").decode(binaryData);
-      setimageSrc(stringValue);
-      if (data[0].temperature) {
-        setTemperature(data[0].temperature);
-      } else {
-        setTemperature(null);
-      }
-    } else {
-      setimageSrc('xyma.png');
-      setTemperature(null);
+    if (data !== null) {
+      let base = data[0].image;
+      let temp = data[0].temperature;
+      setTemperature(temp);
+      setBaseCode(base);
     }
-    //image 2
-    if (data2 !== null && data2.length > 0 && data2[0].image) {
-      const binaryData = new Uint8Array(data2[0].image.data.data);
-      const stringValue = new TextDecoder("utf-8").decode(binaryData);
-      setimageSrc2(stringValue);
-      if (data2[0].alert) {
-        setAlert(data2[0].alert);
-      } else {
-        setTemperature(null);
-        setAlert(false);
-      }
-    } else {
-      setimageSrc2('xyma.png');
-      setTemperature(null);
+    const byteCharacters = atob(baseCode);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: 'image/png' });
+
+  // Create a data URL from the Blob
+  const imageUrl = URL.createObjectURL(blob);
+  setImage(imageUrl);
+  }, [data]);
+  
+  //image2
+  useEffect(() => {
+    if (data2 !== null) {
+      let base2 = data2[0].image;
+      let alert = data2[0].alert;
+      setAlert(alert);
+      setBaseCode2(base2);
     }
+    const byteCharacters2 = atob(baseCode2);
+  const byteNumbers2 = new Array(byteCharacters2.length);
+  for (let i = 0; i < byteCharacters2.length; i++) {
+    byteNumbers2[i] = byteCharacters2.charCodeAt(i);
+  }
+  const byteArray2 = new Uint8Array(byteNumbers2);
+  const blob2 = new Blob([byteArray2], { type: 'image/png' });
+
+  // Create a data2 URL from the Blob
+  const imageUrl2 = URL.createObjectURL(blob2);
+  setImage2(imageUrl2);
   }, [data2]);
-  console.log(alert)
 
   return (
     <div className="imageTemp">
@@ -87,12 +99,10 @@ const ImageTemp = () => {
       </div>
       <div className="image">
         <div className="tempcam">
-        {/* <img src={require(`../../upload/${imageSrc}`)} alt="temp_cam" style={{ width: "95%" }} /> */}
-        <img src={Temp} alt="temp_cam" style={{ width: "95%"}} />
+        <img src={image} alt="temp_cam" style={{ width: "95%" }} />
         </div>
         <div className="normalcam">
-          {/* <img src={require(`../../upload2/${imageSrc2}`)} alt="normal_cam" style={{ width: "95%" }} /> */}
-          <img src={Temp} alt="temp_cam" style={{ width: "95%" }} />
+          <img src={image2} alt="normal_cam" style={{ width: "95%" }} />
         </div>
       </div>
     </div>

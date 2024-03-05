@@ -13,6 +13,10 @@ import nano_vibration from "../../assets/images/nano_vibrations.jpg";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
+  const [dataImage, setDataImage] = useState(null);
+  const [temperature, setTemperature] = useState(0);
+  const [image, setImage] = useState();
+  const [baseCode, setBaseCode] = useState([]);
   const [alldata, setAllData] = useState([]);
   const [sendData, setSendData] = useState([]);
   const [dataVibration, setDataVibration] = useState([]);
@@ -41,6 +45,47 @@ const Dashboard = () => {
       clearInterval(interval);
     };
   }, []);
+
+  //fetch
+  useEffect(() => {
+    const fetchData = async () => {
+      var url;
+      try {
+        url = "http://localhost:4000/sensor/getImage";
+        const response = await fetch(url);
+        const datafetchVal = await response.json();
+        setDataImage(datafetchVal);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    const interval = setInterval(() => {
+      fetchData();
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  },[]);
+
+  //image
+  useEffect(() => {
+    if (dataImage !== null) {
+      let base = dataImage[0].image;
+      let temp = dataImage[0].temperature;
+      setTemperature(temp);
+      setBaseCode(base);
+    }
+    const byteCharacters = atob(baseCode);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: 'image/png' });
+
+  const imageUrl = URL.createObjectURL(blob);
+  setImage(imageUrl);
+  }, [dataImage]);
 
   const fetchAllData = async () => {
     var url;
@@ -242,7 +287,7 @@ const Dashboard = () => {
               </div>
               <div className="mr-4 rounded-lg">
                 <img
-                  src={Temp}
+                  src={image}
                   alt="img"
                   style={{ width: "600px", height: "300px" }}
                 />

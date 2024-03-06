@@ -99,10 +99,10 @@ const ImageTemp = () => {
       </div>
       <div className="image">
         <div className="tempcam">
-        <img src={image} alt="temp_cam" style={{ width: "95%" }} />
+        <img src={image} alt="temp_cam" style={{ width: "95%", height: "95%" }} />
         </div>
         <div className="normalcam">
-          <img src={image2} alt="normal_cam" style={{ width: "95%" }} />
+          <img src={image2} alt="normal_cam" style={{ width: "95%", height: "95%" }} />
         </div>
       </div>
     </div>

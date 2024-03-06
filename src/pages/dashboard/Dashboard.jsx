@@ -14,7 +14,7 @@ import nano_vibration from "../../assets/images/nano_vibrations.jpg";
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [dataImage, setDataImage] = useState(null);
-  const [temperature, setTemperature] = useState(0);
+  const [temperatureVal, setTemperature] = useState(0);
   const [image, setImage] = useState();
   const [baseCode, setBaseCode] = useState([]);
   const [alldata, setAllData] = useState([]);
@@ -51,7 +51,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       var url;
       try {
-        url = "http://localhost:4000/sensor/getImage";
+        url = "http://3.111.136.104:5001/sensor/getImage";
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setDataImage(datafetchVal);

@@ -23,7 +23,7 @@ const Report = () => {
   const fetchAllData = async () => {
     var urlxyma;
     try {
-      urlxyma = "http://3.111.136.104:5001/sensor/getallSensor";
+      urlxyma = "https://3lions.xyma.live/sensor/getallSensor";
       console.log("urlxyma", urlxyma);
       const response = await fetch(urlxyma);
       const dataVal = await response.json();
@@ -35,7 +35,7 @@ const Report = () => {
   const fetchNanoData = async () => {
     var url;
     try {
-        url = `http://3.111.136.104:5001/sensor/getNanoGraph?graphName=${selectNano}`;
+        url = `https://3lions.xyma.live/sensor/getNanoGraph?graphName=${selectNano}`;
       console.log("url", url);
       const response = await fetch(url);
       const dataVal = await response.json();
@@ -50,6 +50,7 @@ const Report = () => {
   var viscosity = [];
   var tbn = [];
   var timexyma = [];
+  
   for (let index = 0; index < data.length; index++) {
     density[index] = data[index].density;
     temperature[index] = data[index].temperature;

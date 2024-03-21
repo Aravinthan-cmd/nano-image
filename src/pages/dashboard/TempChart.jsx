@@ -1,12 +1,48 @@
-// ApexBarChart.js
-import React from 'react';
+import {useEffect, useState} from 'react';
 import Chart from 'react-apexcharts';
 
-const ApexBarChart = () => {
-  // Sample data for the bar chart
+const ApexLineChart = () => {
+  const [data, setData] = useState([]);
+  const [time, setTime] = useState([])
+  const [chart, setChart] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      var url;
+      try {
+        url = "https://3lions.xyma.live/sensor/getTemperature";
+        const response = await fetch(url);
+        const datafetchVal = await response.json();
+        setData(datafetchVal);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    const interval = setInterval(() => {
+      fetchData();
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  console.log('chart', data);
+
+  useEffect(() => {
+    let temp = [];
+    let time = [];
+  for (let i = 0; i < data.length; i++) {
+    temp[i] = data[i]?.temperature;
+    time[i] = data[i]?.updatedAt;
+  }
+  setTime(time);
+  setChart(temp);
+  console.log('val', chart);
+  }, [data]);
+
   const options = {
     chart: {
-      type: 'bar',
+      type: 'line',
     },
     plotOptions: {
       bar: {
@@ -17,22 +53,42 @@ const ApexBarChart = () => {
       enabled: false,
     },
     xaxis: {
-      categories: ['2024-02-23 12:10', '2024-02-23 12:13', '2024-02-23 12:15'],
+      categories: time,
+    },
+    tooltip: {
+      theme: "dark",
+      style: {
+        background: "#000000",
+        color: "#ffffff",
+      },
+      y: {
+        title: {
+          formatter: function (seriesName) {
+            return "Value: ";
+          },
+        },
+        formatter: function (value) {
+          return value;
+        },
+      },
+      marker: {
+        show: true,
+      },
     },
   };
 
   const series = [
     {
       name: 'Temperature',
-      data: [200, 180, 190],
+      data: chart,
     },
   ];
 
   return (
     <div>
-      <Chart options={options} series={series} type="bar" height={320} />
+      <Chart options={options} series={series} type="line" height={320} />
     </div>
   );
 };
 
-export default ApexBarChart;
+export default ApexLineChart;

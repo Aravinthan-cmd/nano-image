@@ -19,7 +19,7 @@ const ImageTemp = () => {
     const fetchData = async () => {
       var url;
       try {
-        url = "http://3.111.136.104:5001/sensor/getImage";
+        url = "https://3lions.xyma.live/sensor/getImage";
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setData(datafetchVal);
@@ -30,7 +30,7 @@ const ImageTemp = () => {
     const fetchData2 = async () => {
       var url;
       try {
-        url = "http://3.111.136.104:5001/sensor/getImage2";
+        url = "https://3lions.xyma.live/sensor/getImage2";
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setData2(datafetchVal);

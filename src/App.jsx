@@ -15,8 +15,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="login" element={<Login />} /> */}
-        {/* <Route path="/" element={<ProtectedRoute />}> */}
+        <Route path="login" element={<Login />} />
+        <Route path="/" element={<ProtectedRoute />}>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="nano" element={<Nano />} />
@@ -25,7 +25,7 @@ function App() {
             <Route path="reports" element={<Report />} />
             <Route path="settings" element={<Settings />} />
           </Route>
-        {/* </Route> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

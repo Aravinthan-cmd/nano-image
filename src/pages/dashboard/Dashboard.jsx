@@ -6,28 +6,24 @@ import visco from "../../assets/images/water copy.png";
 import dtn from "../../assets/images/lab.png";
 import { RadioButton, RadioGroup } from "react-radio-buttons";
 import ReactApexChart from "react-apexcharts";
-import Temp from "../../assets/images/frame_800.png";
 import TempChart from "../dashboard/TempChart";
-import Vibration from "../dashboard/Vibration";
-import nano_vibration from "../../assets/images/nano_vibrations.jpg";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [dataImage, setDataImage] = useState(null);
-  const [temperatureVal, setTemperature] = useState(0);
+  const [dataImage2, setDataImage2] = useState(null);
   const [image, setImage] = useState();
+  const [image2, setImage2] = useState();
   const [baseCode, setBaseCode] = useState([]);
+  const [baseCode2, setBaseCode2] = useState([]);
   const [alldata, setAllData] = useState([]);
   const [sendData, setSendData] = useState([]);
-  const [dataVibration, setDataVibration] = useState([]);
-  const [vibrationTemp, setVibration] = useState([]);
-  const [timeLast, setLastTime] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       var url;
       try {
-        url = "http://3.111.136.104:5001/sensor/getsensor";
+        url = "https://3lions.xyma.live/sensor/getsensor";
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setData(datafetchVal);
@@ -38,8 +34,6 @@ const Dashboard = () => {
     const interval = setInterval(() => {
       fetchData();
       fetchAllData();
-      fetchDataVibration();
-      updateVibration();
     }, 2000);
     return () => {
       clearInterval(interval);
@@ -51,7 +45,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       var url;
       try {
-        url = "http://3.111.136.104:5001/sensor/getImage";
+        url = "https://3lions.xyma.live/sensor/getImage";
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setDataImage(datafetchVal);
@@ -59,8 +53,20 @@ const Dashboard = () => {
         console.log("error", error);
       }
     };
+    const fetchData2 = async () => {
+      var url;
+      try {
+        url = "https://3lions.xyma.live/sensor/getImage2";
+        const response = await fetch(url);
+        const datafetchVal = await response.json();
+        setDataImage2(datafetchVal);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
     const interval = setInterval(() => {
       fetchData();
+      fetchData2();
     }, 1000);
     return () => {
       clearInterval(interval);
@@ -71,8 +77,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (dataImage !== null) {
       let base = dataImage[0].image;
-      let temp = dataImage[0].temperature;
-      setTemperature(temp);
       setBaseCode(base);
     }
     const byteCharacters = atob(baseCode);
@@ -86,11 +90,28 @@ const Dashboard = () => {
   const imageUrl = URL.createObjectURL(blob);
   setImage(imageUrl);
   }, [dataImage]);
+  //image2
+  useEffect(() => {
+    if (dataImage2 !== null) {
+      let base2 = dataImage2[0].image;
+      setBaseCode2(base2);
+    }
+    const byteCharacters2 = atob(baseCode2);
+  const byteNumbers2 = new Array(byteCharacters2.length);
+  for (let i = 0; i < byteCharacters2.length; i++) {
+    byteNumbers2[i] = byteCharacters2.charCodeAt(i);
+  }
+  const byteArray2 = new Uint8Array(byteNumbers2);
+  const blob2 = new Blob([byteArray2], { type: 'image/png' });
+
+  const imageUrl2 = URL.createObjectURL(blob2);
+  setImage2(imageUrl2);
+  }, [dataImage2]);
 
   const fetchAllData = async () => {
     var url;
     try {
-      url = "http://3.111.136.104:5001/sensor/getallSensor";
+      url = "https://3lions.xyma.live/sensor/getallSensor";
       console.log("url", url);
       const response = await fetch(url);
       const dataVal = await response.json();
@@ -99,30 +120,6 @@ const Dashboard = () => {
       console.log("error", error);
     }
   };
-
-  const fetchDataVibration = async () => {
-    var url;
-    try {
-      url = `http://3.111.136.104:5001/sensor/getNanoGraph?graphName=sound-rms`;
-      console.log("url: ", url);
-      const response = await fetch(url);
-      const datafetch = await response.json();
-      setDataVibration(datafetch);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateVibration = () => {
-    if (dataVibration.length !== 0) {
-      let vibration = dataVibration[0].data[0];
-      let timeVibration = dataVibration[0].timestamp[0];
-      setVibration(vibration);
-      setLastTime(timeVibration);
-    }
-  };
-
-  console.log("data", timeLast);
 
   let temp = [];
   let den = [];
@@ -148,7 +145,7 @@ const Dashboard = () => {
         data: sendData,
         stroke: {
           curve: "smooth",
-          dashArray: [5, 5], // Set the dash pattern
+          dashArray: [5, 5],
         },
       },
     ],
@@ -175,10 +172,10 @@ const Dashboard = () => {
       },
     },
     tooltip: {
-      theme: "dark", // Set the theme to dark
+      theme: "dark",
       style: {
-        background: "#000000", // Set the background color to black
-        color: "#ffffff", // Set the text color to white
+        background: "#000000",
+        color: "#ffffff",
       },
       y: {
         title: {
@@ -281,13 +278,17 @@ const Dashboard = () => {
           </div>
           <div className="bg-[#fffdfdec] rounded-lg h-[42vh]">
             <h4 className="font-bold text-xl ml-3 mt-2">Camera Feed:</h4>
-            <div className="grid grid-cols-2 gap-3 mt-2">
+            <div className="grid grid-cols-2 gap-3 ml-3 mt-2">
               <div>
-                <TempChart />
+              <img
+                  src={image}
+                  alt="img"
+                  style={{ width: "600px", height: "300px" }}
+                />
               </div>
               <div className="mr-4 rounded-lg">
                 <img
-                  src={image}
+                  src={image2}
                   alt="img"
                   style={{ width: "600px", height: "300px" }}
                 />
@@ -339,82 +340,13 @@ const Dashboard = () => {
             />
           </div>
           <div className="bg-[#fffdfdec] rounded-lg h-[42vh]">
-            <h4 className="font-bold text-xl ml-3 mt-2">Vibration:</h4>
-            {/* <div className="flex flex-row gap-3 justify-center items-center mt-2">
-              <div className="chart w-2/4">
-                <Vibration />
-              </div>
-              <div className="">
-                <h1>Last Updated Time:</h1>
-                <span>2024-02-22 12:20</span>
-              </div>
-            </div> */}
-            <img src={nano_vibration} style={{height:"350px"}}></img>
+            <h4 className="font-bold text-xl ml-3 mt-2">Camera Analytics:</h4>
+            <div className="ml-3">
+            <TempChart />
+            </div>
           </div>
         </div>
       </div>
-      {/* <div className="boxes">
-        <div className="density box">
-          <div className="left">
-            <img src={density} alt="" style={{ width: '80px' }} />
-          </div>
-          <div className="right">
-            <h1>Density</h1>
-            <span>{data[0]?.density} kg/m³</span>
-          </div>
-        </div>
-
-        <div className="viscosity box">
-          <div className="left">
-            <img src={visco} alt="" style={{ width: '80px' }} />
-          </div>
-          <div className="right">
-            <h1>Viscosity</h1>
-            <span>{data[0]?.viscosity} cSt</span>
-          </div>
-        </div>
-        <div className="temperature box">
-          <div className="left">
-            <img src={temperature} alt="" style={{ width: '80px' }} />
-          </div>
-          <div className="right">
-            <h1>Temperature</h1>
-            <span>{data[0]?.temperature} °C</span>
-          </div>
-        </div>
-        <div className="dtn box">
-          <div className="left">
-            <img src={dtn} alt="" style={{ width: '80px' }} />
-          </div>
-          <div className="right">
-            <h1>TDN</h1>
-            <span>{data[0]?.dtn}</span>
-          </div>
-        </div>
-      </div>
-
-      
-
-      <div className="graph_boxes">
-        <div className="list">
-          <RadioGroup onChange={handleOptionChange} horizontal>
-            <RadioButton value="Density" rootColor="#2196F3" pointColor="#2196F3">
-              Density
-            </RadioButton>
-            <RadioButton value="Viscosity" rootColor="#2196F3" pointColor="#2196F3">
-              Viscosity
-            </RadioButton>
-            <RadioButton value="Temperature" rootColor="#2196F3" pointColor="#2196F3">
-              Temperature
-            </RadioButton>
-            <RadioButton value="Dtn" rootColor="#2196F3" pointColor="#2196F3">
-              TDN
-            </RadioButton>
-          </RadioGroup>
-        </div>
-        <ReactApexChart options={chartOptions} series={chartOptions.series} type='line' height={550} />
-      </div>
-       */}
     </div>
   );
 };

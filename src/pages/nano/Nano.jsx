@@ -13,9 +13,9 @@ const Nano = () => {
       var url;
       try {
         if(startDate == null) {
-          url = `http://3.111.136.104:5001/sensor/getNanoGraph?graphName=${selectedOption}`;
+          url = `https://3lions.xyma.live/sensor/getNanoGraph?graphName=${selectedOption}`;
         } else {
-          url = `http://3.111.136.104:5001/sensor/getNanoGraph?graphName=${selectedOption}&startDate=${startDate}&endDate=${endDate}`;
+          url = `https://3lions.xyma.live/sensor/getNanoGraph?graphName=${selectedOption}&startDate=${startDate}&endDate=${endDate}`;
         }
         console.log("url: ", url);
         const response = await fetch(url);

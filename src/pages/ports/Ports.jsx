@@ -19,7 +19,7 @@ const Ports = () => {
     const fetchData = async () => {
       var url;
       try {
-        url = 'http://3.111.136.104:5001/sensor/getsensor';
+        url = 'https://3lions.xyma.live/sensor/getsensor';
         const response = await fetch(url);
         const datafetchVal = await response.json();
         setData(datafetchVal);
@@ -39,7 +39,7 @@ const Ports = () => {
   const fetchAllData = async () => {
     var url;
     try {
-      url = 'http://3.111.136.104:5001/sensor/getallSensor';
+      url = 'https://3lions.xyma.live/sensor/getallSensor';
       console.log('url', url);
       const response = await fetch(url);
       const dataVal = await response.json();

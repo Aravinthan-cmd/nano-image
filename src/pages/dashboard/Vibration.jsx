@@ -39,7 +39,6 @@ const ApexGaugeChart = () => {
                 show: true,
                 label: "dB",
                 formatter: function (w) {
-                  // You can customize the formatting here if needed
                   return 40.189999 + "(g)";
                 },
               },
@@ -66,8 +65,7 @@ const ApexGaugeChart = () => {
           width: 7,
         },
       };
-      
-
+    
   const series = [40.189999];
 
   return (

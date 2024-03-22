@@ -7,6 +7,11 @@ import dtn from "../../assets/images/lab.png";
 import { RadioButton, RadioGroup } from "react-radio-buttons";
 import ReactApexChart from "react-apexcharts";
 import TempChart from "../dashboard/TempChart";
+import ship from "../../assets/images/IMG-20240321-WA0000~2.jpg";
+import person from "../../assets/images/scene_02.0000.png";
+import Vibration from "../../pages/dashboard/Vibration";
+import nano from "../../assets/images/Nanoprecise_Logo.png";
+import acoustic from "../../assets/images/acoustic.webp";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -71,7 +76,7 @@ const Dashboard = () => {
     return () => {
       clearInterval(interval);
     };
-  },[]);
+  }, []);
 
   //image
   useEffect(() => {
@@ -80,16 +85,17 @@ const Dashboard = () => {
       setBaseCode(base);
     }
     const byteCharacters = atob(baseCode);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  const byteArray = new Uint8Array(byteNumbers);
-  const blob = new Blob([byteArray], { type: 'image/png' });
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "image/png" });
 
-  const imageUrl = URL.createObjectURL(blob);
-  setImage(imageUrl);
+    const imageUrl = URL.createObjectURL(blob);
+    setImage(imageUrl);
   }, [dataImage]);
+
   //image2
   useEffect(() => {
     if (dataImage2 !== null) {
@@ -97,15 +103,14 @@ const Dashboard = () => {
       setBaseCode2(base2);
     }
     const byteCharacters2 = atob(baseCode2);
-  const byteNumbers2 = new Array(byteCharacters2.length);
-  for (let i = 0; i < byteCharacters2.length; i++) {
-    byteNumbers2[i] = byteCharacters2.charCodeAt(i);
-  }
-  const byteArray2 = new Uint8Array(byteNumbers2);
-  const blob2 = new Blob([byteArray2], { type: 'image/png' });
-
-  const imageUrl2 = URL.createObjectURL(blob2);
-  setImage2(imageUrl2);
+    const byteNumbers2 = new Array(byteCharacters2.length);
+    for (let i = 0; i < byteCharacters2.length; i++) {
+      byteNumbers2[i] = byteCharacters2.charCodeAt(i);
+    }
+    const byteArray2 = new Uint8Array(byteNumbers2);
+    const blob2 = new Blob([byteArray2], { type: "image/png" });
+    const imageUrl2 = URL.createObjectURL(blob2);
+    setImage2(imageUrl2);
   }, [dataImage2]);
 
   const fetchAllData = async () => {
@@ -231,7 +236,9 @@ const Dashboard = () => {
                   />
                   <div>
                     <h1 className="font-bold">Density</h1>
-                    <span className="font-bold text-xl">{data[0]?.density}kg/m³</span>
+                    <span className="font-bold text-xl">
+                      {data[0]?.density}kg/m³
+                    </span>
                   </div>
                 </div>
 
@@ -244,7 +251,9 @@ const Dashboard = () => {
                   />
                   <div>
                     <h1 className="font-bold">Viscosity</h1>
-                    <span className="font-bold text-xl">{data[0]?.viscosity}cSt</span>
+                    <span className="font-bold text-xl">
+                      {data[0]?.viscosity}cSt
+                    </span>
                   </div>
                 </div>
               </div>
@@ -258,7 +267,9 @@ const Dashboard = () => {
                   />
                   <div className="right">
                     <h1 className="font-bold">Temperature</h1>
-                    <span className="font-bold text-xl">{data[0]?.temperature}°C</span>
+                    <span className="font-bold text-xl">
+                      {data[0]?.temperature}°C
+                    </span>
                   </div>
                 </div>
                 <div className="bg-[#f8ae9b] rounded-lg  mr-2 grid grid-cols-2  h-[15vh] justify-center items-center">
@@ -276,21 +287,36 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-[#fffdfdec] rounded-lg h-[42vh]">
+          <div className="bg-[#fffdfdec] rounded-lg h-[42vh] relative">
             <h4 className="font-bold text-xl ml-3 mt-2">Camera Feed:</h4>
-            <div className="grid grid-cols-2 gap-3 ml-3 mt-2">
-              <div>
-              <img
+            <div className="absolute top-2" style={{ left: "70%" }}>
+              <h1>
+                Alert : <span className="text-red-700">Without_helmet</span>
+              </h1>
+            </div>
+            <div className="flex flex-row mt-5 gap-2 p-1">
+              <div className="border-4 border-black rounded-lg">
+                <div className=" absolute top-9">Thermal</div>
+                <img
                   src={image}
                   alt="img"
-                  style={{ width: "600px", height: "300px" }}
+                  style={{ width: "350px", height: "270px" }}
                 />
               </div>
-              <div className="mr-4 rounded-lg">
+              <div className="border-4 border-black rounded-lg">
+                <div className=" absolute top-9">Acoustic</div>
+                <img
+                  src={acoustic}
+                  alt="img"
+                  style={{ width: "350px", height: "270px" }}
+                />
+              </div>
+              <div className="border-4 border-black rounded-lg">
+                <div className=" absolute top-9">HSE</div>
                 <img
                   src={image2}
                   alt="img"
-                  style={{ width: "600px", height: "300px" }}
+                  style={{ width: "350px", height: "270px" }}
                 />
               </div>
             </div>
@@ -299,8 +325,8 @@ const Dashboard = () => {
         <div className="grid gap-3 mt-3 grid-cols-1 lg:grid-cols-2">
           <div className="bg-[#fffdfdec] rounded-lg h-[42vh]">
             <div className="list ml-4 mr-4">
-              <h4 className="font-bold text-xl ml-2 mt-2 ">Analytics:</h4>
-              <RadioGroup onChange={handleOptionChange} horizontal>
+              <h4 className="font-bold text-xl ml-2 mt-2 ">Model Feed:</h4>
+              {/* <RadioGroup onChange={handleOptionChange} horizontal>
                 <RadioButton
                   value="Density"
                   rootColor="#2196F3"
@@ -329,21 +355,39 @@ const Dashboard = () => {
                 >
                   TDN
                 </RadioButton>
-              </RadioGroup>
+              </RadioGroup> */}
             </div>
-            <ReactApexChart
+            <div className="w-full p-2">
+              {/* <div className="w-full h-15 pt-2 pl-96 pb-6">
+                <h1>
+                  Alert : <span className="text-red-700">Without_helmet</span>
+                </h1>
+              </div> */}
+              <div className="flex gap-1">
+                <img src={ship} alt="ship" style={{ height: "300px" }} />
+                {/* <img src={person} alt="person" style={{ height: "225px" }} /> */}
+              </div>
+            </div>
+            {/* <ReactApexChart
               className="bg-[#979797cb] rounded-lg ml-4 mr-4 mt-4"
               options={chartOptions}
               series={chartOptions.series}
               type="line"
               height="65%"
-            />
+            /> */}
           </div>
           <div className="bg-[#fffdfdec] rounded-lg h-[42vh]">
-            <h4 className="font-bold text-xl ml-3 mt-2">Camera Analytics:</h4>
-            <div className="ml-3">
+            <img
+              src={nano}
+              alt="ship"
+              style={{ width: "200px", height: "60px" }}
+            />
+            <h4 className="font-bold text-xl ml-3 mt-2">Vibration:</h4>
+            {/* <Vibration /> */}
+            {/* <div className="ml-3">
             <TempChart />
-            </div>
+            </div> */}
+            <TempChart />
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.cba3fe64.css",
-    "main.js": "/static/js/main.8c8d51f8.js",
+    "main.css": "/static/css/main.fcf55311.css",
+    "main.js": "/static/js/main.c999a082.js",
+    "static/media/scene_02.0000.png": "/static/media/scene_02.0000.923409fdfa9671ea8985.png",
     "static/media/boxicons.svg": "/static/media/boxicons.f80cc694af79b88fde78.svg",
     "static/media/boxicons.eot": "/static/media/boxicons.dfc882ec9689f820c7c9.eot",
     "static/media/boxicons.woff": "/static/media/boxicons.1a7e2e2bf3a855e674d4.woff",
@@ -12,18 +13,21 @@
     "static/media/3 lions logo  (1).png": "/static/media/3 lions logo  (1).40835c6261053c98a23a.png",
     "static/media/1311213_313.svg": "/static/media/1311213_313.97dab9f242ca415357aab1775ebfe239.svg",
     "static/media/7079771_3324619.svg": "/static/media/7079771_3324619.2f49372119397cfaea0ade143ac60ff3.svg",
+    "static/media/Nanoprecise_Logo.png": "/static/media/Nanoprecise_Logo.6fc39bbfede25848a620.png",
     "static/media/density copy.png": "/static/media/density copy.713599efb76fb72970e7.png",
+    "static/media/IMG-20240321-WA0000~2.jpg": "/static/media/IMG-20240321-WA0000~2.4675f79990ffb7645e24.jpg",
+    "static/media/acoustic.webp": "/static/media/acoustic.55e5d7b4901a4d313466.webp",
     "static/media/water copy.png": "/static/media/water copy.902faa83f5f1bc9b909d.png",
     "static/media/lab.png": "/static/media/lab.0b70ebd1cdb06ba4bb0b.png",
     "static/media/thermometer copy.png": "/static/media/thermometer copy.87c48b359119fb4ce9fd.png",
     "static/media/alert-red.png": "/static/media/alert-red.2cdd83f4bb96ece3bc1b.png",
     "static/media/alert-green.png": "/static/media/alert-green.f3657439ba7bd3eb1611.png",
     "index.html": "/index.html",
-    "main.cba3fe64.css.map": "/static/css/main.cba3fe64.css.map",
-    "main.8c8d51f8.js.map": "/static/js/main.8c8d51f8.js.map"
+    "main.fcf55311.css.map": "/static/css/main.fcf55311.css.map",
+    "main.c999a082.js.map": "/static/js/main.c999a082.js.map"
   },
   "entrypoints": [
-    "static/css/main.cba3fe64.css",
-    "static/js/main.8c8d51f8.js"
+    "static/css/main.fcf55311.css",
+    "static/js/main.c999a082.js"
   ]
 }

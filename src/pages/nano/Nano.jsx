@@ -13,7 +13,8 @@ const Nano = () => {
       var url;
       try {
         if(startDate == null) {
-          url = `https://3lions.xyma.live/sensor/getNanoGraph?graphName=${selectedOption}`;
+          url = `http://localhost:4000/sensor/getNanoGraph?graphName=${selectedOption}`;
+          // url = `https://3lions.xyma.live/sensor/getNanoGraph?graphName=${selectedOption}`;
         } else {
           url = `https://3lions.xyma.live/sensor/getNanoGraph?graphName=${selectedOption}&startDate=${startDate}&endDate=${endDate}`;
         }
@@ -27,7 +28,7 @@ const Nano = () => {
     };
     const interval = setInterval(() => {
       fetchData();
-    }, 2000);
+    }, 5000);
     return () => {
       clearInterval(interval);
     };
@@ -92,10 +93,10 @@ const Nano = () => {
       },
     },
     tooltip: {
-      theme: "dark", // Set the theme to dark
+      theme: "dark",
       style: {
-        background: "#000000", // Set the background color to black
-        color: "#000000", // Set the text color to white
+        background: "#000000",
+        color: "#000000",
       },
       y: {
         title: {
@@ -139,7 +140,9 @@ const Nano = () => {
   };
 
   return (
-    <div className="nano">
+    <>
+    {data.length !== 0 ? (
+      <div className="nano">
       <div className="box">
         <div className="select_value">
           <label htmlFor="dropdown">Select: </label>
@@ -194,6 +197,18 @@ const Nano = () => {
         />
       </div>
     </div>
+    ):(
+      <div className="overlay-table">
+        <div className="load">
+          <div class="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 

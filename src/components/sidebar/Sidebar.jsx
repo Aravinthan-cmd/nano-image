@@ -33,7 +33,7 @@ const Sidebar = () => {
     return (
         <div className='sidebar'>
             <div className="sidebar__logo">
-                <img src={logo} alt="" style={{width : '12rem',height : '6rem'}}/>
+                <img src={logopower} alt="" style={{width : '12rem',height : '6rem'}}/>
                 <div className="sidebar-close" onClick={closeSidebar}>
                     <i className='bx bx-x'></i>
                 </div>

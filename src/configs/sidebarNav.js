@@ -7,12 +7,12 @@ const sidebarNav = [
         icon: <i className='bx bx-home-alt'></i>,
         text: 'Dashboard'
     },
-    {
-        link: '/nano',
-        section: 'nano',
-        icon: <i className='bx bx-line-chart'></i>,
-        text: 'Nano precise'
-    },
+    // {
+    //     link: '/nano',
+    //     section: 'nano',
+    //     icon: <i className='bx bx-line-chart'></i>,
+    //     text: 'Nano precise'
+    // },
     {
         link: '/ports',
         section: 'Ports',

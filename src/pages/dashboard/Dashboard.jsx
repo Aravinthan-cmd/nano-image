@@ -377,11 +377,11 @@ const Dashboard = () => {
             /> */}
           </div>
           <div className="bg-[#fffdfdec] rounded-lg h-[42vh]">
-            <img
+            {/* <img
               src={nano}
               alt="ship"
               style={{ width: "200px", height: "60px" }}
-            />
+            /> */}
             <h4 className="font-bold text-xl ml-3 mt-2">Vibration:</h4>
             {/* <Vibration /> */}
             {/* <div className="ml-3">
